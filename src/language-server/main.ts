@@ -1,0 +1,12 @@
+import { startLanguageServer } from 'langium';
+import { createConnection, ProposedFeatures } from 'vscode-languageserver/node';
+import { createHelloWorldServices } from './hello-world-module';
+
+// Create a connection to the client
+const connection = createConnection(ProposedFeatures.all);
+
+// Inject the shared services and language-specific services
+const { shared } = createHelloWorldServices({ connection });
+
+// Start the language server with the shared services
+startLanguageServer(shared);
