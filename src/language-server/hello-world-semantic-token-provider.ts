@@ -1,6 +1,6 @@
 import { AbstractSemanticTokenProvider, AstNode, SemanticTokenAcceptor } from "langium";
-import { SemanticTokenTypes } from "vscode-languageserver";
-import { isGreeting, isPackage, isPerson } from "./generated/ast";
+import { SemanticTokenModifiers, SemanticTokenTypes } from "vscode-languageserver";
+import { isDocumentation, isGreeting, isPackage, isPerson } from "./generated/ast";
 
 export class HelloWorldSemanticTokenProvider extends AbstractSemanticTokenProvider {
 
@@ -12,6 +12,8 @@ export class HelloWorldSemanticTokenProvider extends AbstractSemanticTokenProvid
         else if(isGreeting(node)) {
             acceptor({ node, keyword: "Hello", type: SemanticTokenTypes.keyword });
             acceptor({ node, keyword: "!", type: SemanticTokenTypes.keyword });
+        } else if(isDocumentation(node)) {
+            acceptor({ node, feature: "doc", type: SemanticTokenTypes.comment, modifier: SemanticTokenModifiers.documentation });
         }
     }
 }

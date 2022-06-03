@@ -90,6 +90,13 @@ export const HelloWorldGrammar = (): Grammar => loadedHelloWorldGrammar ||(loade
               "rule": {
                 "$refText": "Package"
               }
+            },
+            {
+              "$type": "RuleCall",
+              "arguments": [],
+              "rule": {
+                "$refText": "Documentation"
+              }
             }
           ]
         },
@@ -164,12 +171,40 @@ export const HelloWorldGrammar = (): Grammar => loadedHelloWorldGrammar ||(loade
       }
     },
     {
+      "$type": "ParserRule",
+      "parameters": [],
+      "name": "Documentation",
+      "hiddenTokens": [],
+      "alternatives": {
+        "$type": "Assignment",
+        "feature": "doc",
+        "operator": "=",
+        "terminal": {
+          "$type": "RuleCall",
+          "arguments": [],
+          "rule": {
+            "$refText": "DOC"
+          }
+        },
+        "elements": []
+      }
+    },
+    {
       "$type": "TerminalRule",
       "hidden": true,
       "name": "WS",
       "terminal": {
         "$type": "RegexToken",
         "regex": "\\\\s+",
+        "elements": []
+      }
+    },
+    {
+      "$type": "TerminalRule",
+      "name": "DOC",
+      "terminal": {
+        "$type": "RegexToken",
+        "regex": "\\\\/\\\\*\\\\*.*?\\\\*\\\\/",
         "elements": []
       }
     },

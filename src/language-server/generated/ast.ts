@@ -7,6 +7,17 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import { AstNode, AstReflection, Reference, isAstNode } from 'langium';
 
+export interface Documentation extends AstNode {
+    readonly $container: Package;
+    doc: string
+}
+
+export const Documentation = 'Documentation';
+
+export function isDocumentation(item: unknown): item is Documentation {
+    return reflection.isInstance(item, Documentation);
+}
+
 export interface Greeting extends AstNode {
     readonly $container: Package;
     person: Reference<Person>
@@ -20,7 +31,7 @@ export function isGreeting(item: unknown): item is Greeting {
 
 export interface Package extends AstNode {
     readonly $container: Package;
-    instruction: Array<Greeting | Package | Person>
+    instruction: Array<Documentation | Greeting | Package | Person>
     name: string
 }
 
@@ -41,14 +52,14 @@ export function isPerson(item: unknown): item is Person {
     return reflection.isInstance(item, Person);
 }
 
-export type HelloWorldAstType = 'Greeting' | 'Package' | 'Person';
+export type HelloWorldAstType = 'Documentation' | 'Greeting' | 'Package' | 'Person';
 
 export type HelloWorldAstReference = 'Greeting:person';
 
 export class HelloWorldAstReflection implements AstReflection {
 
     getAllTypes(): string[] {
-        return ['Greeting', 'Package', 'Person'];
+        return ['Documentation', 'Greeting', 'Package', 'Person'];
     }
 
     isInstance(node: unknown, type: string): boolean {
